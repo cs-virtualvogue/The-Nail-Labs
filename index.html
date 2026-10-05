@@ -3,7 +3,7 @@
 <head>
   <meta charset="UTF-8">
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
-  <title>THE NAIL LABS - Financial Dashboard</title>
+  <title>THE NAIL LABS - Financial & Sales Hub</title>
 
   <!-- Google Fonts & Frameworks -->
   <link rel="preconnect" href="https://fonts.googleapis.com">
@@ -43,8 +43,8 @@
       transition: all 0.25s cubic-bezier(0.175, 0.885, 0.32, 1.275);
     }
     .hub-card:hover {
-      transform: translate(-4px, -4px);
-      box-shadow: 12px 12px 0px #0f172a;
+      transform: translate(-2px, -2px);
+      box-shadow: 8px 8px 0px #0f172a;
     }
 
     .badge-pop {
@@ -53,98 +53,213 @@
       font-weight: 800;
       border: 1.5px solid #0f172a;
     }
+
+    .btn-pop {
+      background: #ff007a;
+      color: #ffffff;
+      font-weight: 700;
+      border: 2px solid #0f172a;
+      box-shadow: 4px 4px 0px #0f172a;
+      transition: all 0.2s ease;
+    }
+    .btn-pop:hover {
+      background: #e0006c;
+      transform: translate(-2px, -2px);
+      box-shadow: 6px 6px 0px #0f172a;
+    }
+
+    .tab-active-custom {
+      background-color: #0f172a !important;
+      color: #ffffff !important;
+      font-weight: 800 !important;
+      border: 2px solid #0f172a !important;
+    }
   </style>
 </head>
 <body class="min-h-screen flex flex-col justify-between items-center p-4 md:p-8">
 
-  <!-- Main Dashboard Container -->
+  <!-- Main Container -->
   <div class="w-full max-w-6xl my-auto">
     
     <!-- Header Banner -->
-    <div class="relative bg-slate-950 rounded-3xl p-8 md:p-10 text-center overflow-hidden border-2 border-slate-900 shadow-2xl mb-8">
+    <div class="relative bg-slate-950 rounded-3xl p-6 md:p-10 text-center overflow-hidden border-2 border-slate-900 shadow-2xl mb-6">
       <div class="absolute -top-12 -left-12 w-48 h-48 bg-pink-500 rounded-full blur-3xl opacity-40"></div>
       <div class="absolute -bottom-12 -right-12 w-48 h-48 bg-cyan-400 rounded-full blur-3xl opacity-30"></div>
 
       <div class="badge badge-pop text-xs tracking-widest uppercase mb-3 px-4 py-2 shadow-md">
-        💎 FINANCIAL & ACCOUNTING HUB
+        💎 FINANCIAL & SALES MANAGEMENT HUB
       </div>
       
       <h1 class="text-4xl md:text-6xl font-black tracking-tight sassy-title uppercase py-1">
         THE NAIL LABS
       </h1>
       <p class="text-sm md:text-base text-slate-300 mt-2 font-medium tracking-wide max-w-xl mx-auto">
-        ระบบสรุปผลกำไรและการจัดสรรเงิน 3 บัญชีอัจฉริยะ ดึงข้อมูลสดจาก Google Sheets จ้ะ!
+        ระบบบันทึกรายการขาย บันทึกลง Sales & Ledger พร้อมสรุปผลการจัดสรรเงินอัตโนมัติจ้ะ!
       </p>
     </div>
 
-    <!-- 1. การ์ดสรุปตัวเลขทางการเงิน -->
-    <div class="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-4 gap-5 mb-8">
-      
-      <div class="hub-card p-5">
-        <div class="flex justify-between items-center mb-2">
-          <span class="text-xs font-black text-slate-400 uppercase tracking-wider">ยอดเงินโอนสุทธิ</span>
-          <span class="text-2xl">💵</span>
-        </div>
-        <div class="text-3xl font-black text-slate-900" id="totalNetRevenue">กำลังโหลด...</div>
-        <p class="text-[11px] text-slate-500 font-medium mt-1">รับเข้าจริงหลังหักค่าธรรมเนียม</p>
+    <!-- Navigation Tabs Switcher -->
+    <div class="flex justify-center mb-8">
+      <div class="bg-slate-100 p-2 rounded-2xl border-2 border-slate-900 inline-flex gap-2 shadow-[4px_4px_0px_#0f172a]">
+        <button id="tabDashboardBtn" onclick="switchTab('dashboard')" class="px-6 py-2.5 rounded-xl text-sm font-bold transition-all duration-200 tab-active-custom">
+          📊 สรุปยอดเงิน & กราฟ
+        </button>
+        <button id="tabSalesFormBtn" onclick="switchTab('salesForm')" class="px-6 py-2.5 rounded-xl text-sm font-bold text-slate-700 transition-all duration-200 hover:bg-slate-200">
+          📝 บันทึกข้อมูลการขายใหม่
+        </button>
       </div>
-
-      <div class="hub-card p-5">
-        <div class="flex justify-between items-center mb-2">
-          <span class="text-xs font-black text-slate-400 uppercase tracking-wider">ทุนหมุนเวียน (48.5%)</span>
-          <span class="text-2xl">🔄</span>
-        </div>
-        <div class="text-3xl font-black text-pink-600" id="totalOperations">กำลังโหลด...</div>
-        <p class="text-[11px] text-slate-500 font-medium mt-1">ซื้อวัตถุดิบ & รีสต็อกเล็บ</p>
-      </div>
-
-      <div class="hub-card p-5">
-        <div class="flex justify-between items-center mb-2">
-          <span class="text-xs font-black text-slate-400 uppercase tracking-wider">เงินเดือนนัตตี้ (30.5%)</span>
-          <span class="text-2xl">👑</span>
-        </div>
-        <div class="text-3xl font-black text-purple-600" id="totalSalary">กำลังโหลด...</div>
-        <p class="text-[11px] text-slate-500 font-medium mt-1">ค่าแรงส่วนตัว โอนเข้าบัญชีส่วนตัว</p>
-      </div>
-
-      <div class="hub-card p-5">
-        <div class="flex justify-between items-center mb-2">
-          <span class="text-xs font-black text-slate-400 uppercase tracking-wider">เงินสำรองร้าน (21%)</span>
-          <span class="text-2xl">🛡️</span>
-        </div>
-        <div class="text-3xl font-black text-cyan-500" id="totalReserve">กำลังโหลด...</div>
-        <p class="text-[11px] text-slate-500 font-medium mt-1">ก้อนสำรองขยายธุรกิจ & สื่อการตลาด</p>
-      </div>
-
     </div>
 
-    <!-- 2. กราฟวิเคราะห์และสถิติกำไร -->
-    <div class="grid grid-cols-1 lg:grid-cols-3 gap-6 mb-8">
-      
-      <div class="hub-card p-6 lg:col-span-2 flex flex-col justify-between">
-        <div>
-          <div class="flex justify-between items-start mb-4">
-            <h3 class="text-lg font-black text-slate-900 uppercase">📈 แนวโน้มยอดขาย & กำไรสุทธิ</h3>
-            <span class="badge badge-pop text-[10px]">REAL-TIME</span>
+    <!-- TAB 1: DASHBOARD DISPLAY -->
+    <div id="dashboardSection">
+      <!-- 1. การ์ดสรุปตัวเลขทางการเงิน -->
+      <div class="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-4 gap-5 mb-8">
+        
+        <div class="hub-card p-5">
+          <div class="flex justify-between items-center mb-2">
+            <span class="text-xs font-black text-slate-400 uppercase tracking-wider">ยอดเงินโอนสุทธิ</span>
+            <span class="text-2xl">💵</span>
           </div>
-          <div class="w-full h-64">
-            <canvas id="salesTrendChart"></canvas>
-          </div>
+          <div class="text-3xl font-black text-slate-900" id="totalNetRevenue">กำลังโหลด...</div>
+          <p class="text-[11px] text-slate-500 font-medium mt-1">รับเข้าจริงหลังหักค่าธรรมเนียม</p>
         </div>
+
+        <div class="hub-card p-5">
+          <div class="flex justify-between items-center mb-2">
+            <span class="text-xs font-black text-slate-400 uppercase tracking-wider">ทุนหมุนเวียน (48.5%)</span>
+            <span class="text-2xl">🔄</span>
+          </div>
+          <div class="text-3xl font-black text-pink-600" id="totalOperations">กำลังโหลด...</div>
+          <p class="text-[11px] text-slate-500 font-medium mt-1">ซื้อวัตถุดิบ & รีสต็อกเล็บ</p>
+        </div>
+
+        <div class="hub-card p-5">
+          <div class="flex justify-between items-center mb-2">
+            <span class="text-xs font-black text-slate-400 uppercase tracking-wider">เงินเดือนนัตตี้ (30.5%)</span>
+            <span class="text-2xl">👑</span>
+          </div>
+          <div class="text-3xl font-black text-purple-600" id="totalSalary">กำลังโหลด...</div>
+          <p class="text-[11px] text-slate-500 font-medium mt-1">ค่าแรงส่วนตัว โอนเข้าบัญชีส่วนตัว</p>
+        </div>
+
+        <div class="hub-card p-5">
+          <div class="flex justify-between items-center mb-2">
+            <span class="text-xs font-black text-slate-400 uppercase tracking-wider">เงินสำรองร้าน (21%)</span>
+            <span class="text-2xl">🛡️</span>
+          </div>
+          <div class="text-3xl font-black text-cyan-500" id="totalReserve">กำลังโหลด...</div>
+          <p class="text-[11px] text-slate-500 font-medium mt-1">ก้อนสำรองขยายธุรกิจ & สื่อการตลาด</p>
+        </div>
+
       </div>
 
-      <div class="hub-card p-6 flex flex-col justify-between">
-        <div>
-          <div class="flex justify-between items-start mb-4">
-            <h3 class="text-lg font-black text-slate-900 uppercase">🍰 สัดส่วนการจัดสรรเงิน</h3>
-            <span class="badge badge-pop text-[10px]">PROFIT SPLIT</span>
-          </div>
-          <div class="w-full h-64 flex justify-center items-center">
-            <canvas id="profitAllocationChart"></canvas>
+      <!-- 2. กราฟวิเคราะห์และสถิติกำไร -->
+      <div class="grid grid-cols-1 lg:grid-cols-3 gap-6 mb-8">
+        
+        <div class="hub-card p-6 lg:col-span-2 flex flex-col justify-between">
+          <div>
+            <div class="flex justify-between items-start mb-4">
+              <h3 class="text-lg font-black text-slate-900 uppercase">📈 แนวโน้มยอดขาย & กำไรสุทธิ</h3>
+              <span class="badge badge-pop text-[10px]">REAL-TIME</span>
+            </div>
+            <div class="w-full h-64">
+              <canvas id="salesTrendChart"></canvas>
+            </div>
           </div>
         </div>
-      </div>
 
+        <div class="hub-card p-6 flex flex-col justify-between">
+          <div>
+            <div class="flex justify-between items-start mb-4">
+              <h3 class="text-lg font-black text-slate-900 uppercase">🍰 สัดส่วนการจัดสรรเงิน</h3>
+              <span class="badge badge-pop text-[10px]">PROFIT SPLIT</span>
+            </div>
+            <div class="w-full h-64 flex justify-center items-center">
+              <canvas id="profitAllocationChart"></canvas>
+            </div>
+          </div>
+        </div>
+
+      </div>
+    </div>
+
+    <!-- TAB 2: RECORD SALES FORM -->
+    <div id="salesFormSection" class="hidden">
+      <div class="hub-card p-6 md:p-8 max-w-3xl mx-auto">
+        <div class="flex items-center justify-between mb-6 pb-4 border-b-2 border-slate-100">
+          <div>
+            <h2 class="text-2xl font-black text-slate-900 uppercase">🛒 ฟอร์มบันทึกข้อมูลการขาย</h2>
+            <p class="text-xs text-slate-500 mt-1 font-medium">บันทึกตรงไปยังแผ่นงาน Sales & Ledger (ข้าม Col F อัตโนมัติจ้ะ)</p>
+          </div>
+          <span class="text-3xl">🛍️</span>
+        </div>
+
+        <form id="salesRecordForm" onsubmit="handleFormSubmit(event)" class="space-y-5">
+          
+          <div class="grid grid-cols-1 md:grid-cols-2 gap-4">
+            <!-- Col A: วันที่ขาย -->
+            <div class="form-control">
+              <label class="label font-bold text-xs text-slate-700 uppercase">Col A: วันที่ขาย</label>
+              <input type="date" id="saleDate" required class="input input-bordered border-2 border-slate-900 rounded-xl font-medium focus:outline-none focus:border-pink-500" />
+            </div>
+
+            <!-- Col B: แพลตฟอร์ม -->
+            <div class="form-control">
+              <label class="label font-bold text-xs text-slate-700 uppercase">Col B: แพลตฟอร์ม</label>
+              <select id="platform" required class="select select-bordered border-2 border-slate-900 rounded-xl font-medium focus:outline-none focus:border-pink-500">
+                <option value="shopee">shopee</option>
+                <option value="lazada">lazada</option>
+                <option value="tiktok">tiktok</option>
+                <option value="direct">หน้าร้าน / Direct</option>
+              </select>
+            </div>
+          </div>
+
+          <div class="grid grid-cols-1 md:grid-cols-2 gap-4">
+            <!-- Col C: รหัส SKU สินค้า -->
+            <div class="form-control">
+              <label class="label font-bold text-xs text-slate-700 uppercase">Col C: รหัส SKU สินค้า</label>
+              <input type="text" id="sku" placeholder="เช่น 52318751201" required class="input input-bordered border-2 border-slate-900 rounded-xl font-medium focus:outline-none focus:border-pink-500" />
+            </div>
+
+            <!-- Col D: ราคาขายจริง -->
+            <div class="form-control">
+              <label class="label font-bold text-xs text-slate-700 uppercase">Col D: ราคาขายจริง (บาท)</label>
+              <input type="number" step="0.01" id="sellingPrice" placeholder="199" required class="input input-bordered border-2 border-slate-900 rounded-xl font-medium focus:outline-none focus:border-pink-500" />
+            </div>
+          </div>
+
+          <div class="grid grid-cols-1 md:grid-cols-2 gap-4">
+            <!-- Col E: ยอดเงินโอนสุทธิ (หลังหักค่าธรรมเนียม) -->
+            <div class="form-control">
+              <label class="label font-bold text-xs text-slate-700 uppercase">Col E: ยอดเงินโอนสุทธิ (หลังหักค่าธรรมเนียม)</label>
+              <input type="number" step="0.01" id="netTransferred" placeholder="126.65" required class="input input-bordered border-2 border-slate-900 rounded-xl font-medium focus:outline-none focus:border-pink-500" />
+            </div>
+
+            <!-- Col G: ค่ากล่องพัสดุ/อุปกรณ์จัดส่ง -->
+            <div class="form-control">
+              <label class="label font-bold text-xs text-slate-700 uppercase">Col G: ค่ากล่องพัสดุ/อุปกรณ์จัดส่ง (บาท)</label>
+              <input type="number" step="0.01" id="shippingCost" placeholder="12" value="12" required class="input input-bordered border-2 border-slate-900 rounded-xl font-medium focus:outline-none focus:border-pink-500" />
+            </div>
+          </div>
+
+          <!-- ช่องแนบรูปภาพ / สลิป / ใบสั่งซื้อ -->
+          <div class="form-control">
+            <label class="label font-bold text-xs text-slate-700 uppercase">📷 แนบรูปถ่ายสลิป / ใบสั่งซื้อ (Shopee, Lazada, ฯลฯ)</label>
+            <input type="file" id="receiptFile" accept="image/*,.pdf" onchange="previewImage(event)" class="file-input file-input-bordered border-2 border-slate-900 rounded-xl w-full text-sm font-medium" />
+            
+            <!-- ตัวอย่างรูปภาพที่อัปโหลด -->
+            <div id="imagePreviewContainer" class="hidden mt-3 p-3 border-2 border-dashed border-slate-300 rounded-xl text-center">
+              <p class="text-xs font-bold text-slate-500 mb-2">ตัวอย่างไฟล์ที่เลือก:</p>
+              <img id="previewImg" src="" alt="Slip Preview" class="max-h-48 mx-auto rounded-lg shadow-md border border-slate-200" />
+            </div>
+          </div>
+
+          <button type="submit" id="submitBtn" class="btn btn-pop w-full rounded-xl text-base uppercase tracking-wider py-3 mt-4">
+            💾 บันทึกรายการลง Sales & Ledger
+          </button>
+        </form>
+      </div>
     </div>
 
   </div>
@@ -153,13 +268,61 @@
     © 2026 THE NAIL LABS — MILIN GLOBAL GROUP
   </footer>
 
-  <!-- Script เชื่อมต่อ API สดจาก Google Sheets -->
+  <!-- Script การทำงาน -->
   <script>
-    // ⚠️ นำ URL ที่ก๊อปปี้มาจากขั้นตอนที่ 2 มาวางในอัญประกาศตรงนี้จ้ะ
-    const API_URL = "https://script.google.com/macros/s/AKfycbzw2Kl-Ea7h3RRq5EY5Q0snso2NG2PcSAoJb5MYrEwDz3MK4mHuh6wHo-v703D0N64RQg/exec";
+    const API_URL = "https://script.google.com/macros/s/AKfycbznQwDF0yPCKy0hhJX1zGK1LG3cXosmpchRH4HBypwKqTGdN9zgK_0qHk3xQsoAvH6T9A/exec";
 
     let trendChart = null;
     let allocationChart = null;
+    let base64FileData = "";
+
+    // ตั้งค่าวันที่เริ่มต้นเป็นวันนี้
+    document.getElementById('saleDate').valueAsDate = new Date();
+
+    // ฟังก์ชันสลับแท็บ
+    function switchTab(tabName) {
+      const dashSec = document.getElementById('dashboardSection');
+      const salesSec = document.getElementById('salesFormSection');
+      const dashBtn = document.getElementById('tabDashboardBtn');
+      const salesBtn = document.getElementById('tabSalesFormBtn');
+
+      if (tabName === 'dashboard') {
+        dashSec.classList.remove('hidden');
+        salesSec.classList.add('hidden');
+        
+        dashBtn.classList.add('tab-active-custom');
+        dashBtn.classList.remove('text-slate-700');
+        salesBtn.classList.remove('tab-active-custom');
+        salesBtn.classList.add('text-slate-700');
+        
+        fetchDashboardData();
+      } else {
+        dashSec.classList.add('hidden');
+        salesSec.classList.remove('hidden');
+
+        salesBtn.classList.add('tab-active-custom');
+        salesBtn.classList.remove('text-slate-700');
+        dashBtn.classList.remove('tab-active-custom');
+        dashBtn.classList.add('text-slate-700');
+      }
+    }
+
+    // ฟังก์ชันพรีวิวรูปภาพและแปลงเป็น Base64
+    function previewImage(event) {
+      const file = event.target.files[0];
+      if (file) {
+        const reader = new FileReader();
+        reader.onload = function(e) {
+          base64FileData = e.target.result;
+          document.getElementById('previewImg').src = e.target.result;
+          document.getElementById('imagePreviewContainer').classList.remove('hidden');
+        }
+        reader.readAsDataURL(file);
+      } else {
+        base64FileData = "";
+        document.getElementById('imagePreviewContainer').classList.add('hidden');
+      }
+    }
 
     // ฟังก์ชันจัดฟอร์แมตตัวเลขสกุลเงิน
     function formatCurrency(amount) {
@@ -177,25 +340,70 @@
           return;
         }
 
-        // 1. อัปเดตตัวเลขในการ์ดสรุปผล
         const summary = data.summary;
         document.getElementById('totalNetRevenue').innerText = formatCurrency(summary.totalNetRevenue);
         document.getElementById('totalOperations').innerText = formatCurrency(summary.totalOperations);
         document.getElementById('totalSalary').innerText = formatCurrency(summary.totalSalary);
         document.getElementById('totalReserve').innerText = formatCurrency(summary.totalReserve);
 
-        // 2. เตรียมข้อมูลทำกราฟเส้น (Trend Chart)
         const labels = data.trend.map(item => item.date);
         const revenueData = data.trend.map(item => item.revenue);
         const profitData = data.trend.map(item => item.profit);
 
         renderTrendChart(labels, revenueData, profitData);
-
-        // 3. เตรียมข้อมูลทำกราฟโดนัท (Profit Split Chart)
         renderAllocationChart(summary.totalOperations, summary.totalSalary, summary.totalReserve);
 
       } catch (err) {
         console.error("Failed to load data:", err);
+      }
+    }
+
+    // ฟังก์ชันส่งข้อมูลการขายไปบันทึกที่ Google Apps Script
+    async function handleFormSubmit(event) {
+      event.preventDefault();
+
+      const submitBtn = document.getElementById('submitBtn');
+      submitBtn.disabled = true;
+      submitBtn.innerText = "⏳ กำลังบันทึกข้อมูล...";
+
+      // โครงสร้างวัตถุข้อมูลส่งเข้า Apps Script
+      const payload = {
+        action: "addSalesRecord",
+        saleDate: document.getElementById('saleDate').value,
+        platform: document.getElementById('platform').value,
+        sku: document.getElementById('sku').value,
+        sellingPrice: parseFloat(document.getElementById('sellingPrice').value) || 0,
+        netTransferred: parseFloat(document.getElementById('netTransferred').value) || 0,
+        shippingCost: parseFloat(document.getElementById('shippingCost').value) || 0,
+        fileData: base64FileData
+      };
+
+      try {
+        const response = await fetch(API_URL, {
+          method: "POST",
+          body: JSON.stringify(payload)
+        });
+
+        const result = await response.json();
+
+        if (result.success) {
+          alert("✅ บันทึกรายการลงแผ่นงาน Sales & Ledger เรียบร้อยจ้ะ!");
+          document.getElementById('salesRecordForm').reset();
+          document.getElementById('saleDate').valueAsDate = new Date();
+          document.getElementById('shippingCost').value = "12";
+          document.getElementById('imagePreviewContainer').classList.add('hidden');
+          base64FileData = "";
+          
+          switchTab('dashboard');
+        } else {
+          alert("❌ เกิดข้อผิดพลาดในการบันทึก: " + (result.error || "โปรดตรวจสอบการตั้งค่า Apps Script"));
+        }
+      } catch (error) {
+        console.error("Error submitting form:", error);
+        alert("❌ ไม่สามารถเชื่อมต่อกับระบบได้ โปรดลองอีกครั้งจ้ะ");
+      } finally {
+        submitBtn.disabled = false;
+        submitBtn.innerText = "💾 บันทึกรายการลง Sales & Ledger";
       }
     }
 
