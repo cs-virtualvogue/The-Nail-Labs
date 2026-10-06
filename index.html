@@ -126,9 +126,9 @@
 
   </div>
 
-  <script>
+ <script>
     // ** ใส่ Web App URL ที่ได้จากการ Deploy Google Apps Script **
-    const WEB_APP_URL = "https://script.google.com/macros/s/AKfycbz_CJpBv9Zw7BreqYS9rl3-v0qP06dYcn9M_jqaedfJaCsON8D9bn0ueakAogWSYLg4hQ/exec";
+    const WEB_APP_URL = "https://script.google.com/macros/s/AKfycbyp6eVtdQvu2Fb9IqeC5LRl9BaZRoR88kq9zkegYVAnJnMnymINK3sZfbF6-g8dsgeKOw/exec";
 
     const slipInput = document.getElementById('slipInput');
     const dropZone = document.getElementById('dropZone');
@@ -156,7 +156,8 @@
       }
     });
 
-    uploadForm.addEventListener('submit', async (e) => {
+    // --- แก้ไขจุดนี้: เปลี่ยนจาก FormData เป็น Base64 ---
+    uploadForm.addEventListener('submit', (e) => {
       e.preventDefault();
       const file = slipInput.files[0];
       if (!file) return;
@@ -165,28 +166,37 @@
       submitBtn.innerText = '⏳ กำลังอ่านข้อมูล OCR...';
       showStatus('กำลังบันทึกรูปและสแกนสลิป โปรดรอสักครู่...', 'bg-blue-50 text-blue-700 border-blue-200');
 
-      const formData = new FormData();
-      formData.append('slip', file);
+      const reader = new FileReader();
+      reader.onload = async function(e) {
+        // ดึงเฉพาะข้อมูล Base64 หลังจาก comma
+        const base64Data = e.target.result.split(',')[1];
+        
+        try {
+          const response = await fetch(WEB_APP_URL, {
+            method: 'POST',
+            body: JSON.stringify({
+              fileData: base64Data,
+              mimeType: file.type,
+              fileName: file.name
+            })
+          });
 
-      try {
-        const response = await fetch(WEB_APP_URL, {
-          method: 'POST',
-          body: formData
-        });
+          const result = await response.json();
 
-        const result = await response.json();
-
-        if (result.success) {
-          showStatus(`✅ บันทึกสำเร็จ! ยอดเงิน: ${result.data.amount} บาท (เลขอ้างอิง: ${result.data.refNo})`, 'bg-green-50 text-green-700 border-green-200');
-        } else {
-          showStatus('❌ เกิดข้อผิดพลาด: ' + result.message, 'bg-red-50 text-red-700 border-red-200');
+          if (result.success) {
+            showStatus(`✅ บันทึกสำเร็จ! ยอดเงิน: ${result.data.amount} บาท (เลขอ้างอิง: ${result.data.refNo})`, 'bg-green-50 text-green-700 border-green-200');
+          } else {
+            showStatus('❌ เกิดข้อผิดพลาด: ' + (result.message || 'ไม่สามารถอ่านข้อมูลได้'), 'bg-red-50 text-red-700 border-red-200');
+          }
+        } catch (error) {
+          showStatus('❌ ส่งข้อมูลไม่สำเร็จ หรือติดปัญหา CORS/Permission', 'bg-red-50 text-red-700 border-red-200');
+        } finally {
+          submitBtn.disabled = false;
+          submitBtn.innerText = '💾 บันทึกรายการลง SALES & LEDGER';
         }
-      } catch (error) {
-        showStatus('❌ ส่งข้อมูลไม่สำเร็จ หรือติดปัญหา CORS/Permission', 'bg-red-50 text-red-700 border-red-200');
-      } finally {
-        submitBtn.disabled = false;
-        submitBtn.innerText = '💾 บันทึกรายการลง SALES & LEDGER';
-      }
+      };
+      
+      reader.readAsDataURL(file);
     });
 
     function showStatus(msg, cssClass) {
