@@ -1,209 +1,520 @@
 <!DOCTYPE html>
-<html lang="th">
+<html lang="th" data-theme="light">
 <head>
   <meta charset="UTF-8">
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
-  <title>ระบบอัปโหลดสลิป</title>
+  <title>Sales & Profit Tracker - VIRTUAL VOGUE BIZ</title>
+  
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link href="https://fonts.googleapis.com/css2?family=Plus+Jakarta+Sans:wght@400;600;700;800&family=Prompt:wght@300;400;500;600;700;800;900&display=swap" rel="stylesheet">
   <script src="https://cdn.tailwindcss.com"></script>
-  <link href="https://fonts.googleapis.com/css2?family=Kanit:wght@300;400;500;600;700;800;900&display=swap" rel="stylesheet">
-  <style> 
-    body { 
-      font-family: 'Kanit', sans-serif; 
-      background-color: #f8fafc;
-    }
-    .hero-banner {
-      background: linear-gradient(135deg, #0a0118 0%, #031726 50%, #06283d 100%);
-    }
-    .neon-text {
-      color: #38ef7d;
-      text-shadow: 0 0 12px rgba(56, 239, 125, 0.4);
-    }
-    .badge-pill {
-      background-color: #ccff00;
-      color: #000;
-    }
-    .custom-card {
-      border: 2px solid #1e293b;
-      box-shadow: 0 10px 25px -5px rgba(0, 0, 0, 0.05);
-    }
-    .custom-input-box {
-      border: 2px solid #1e293b;
-    }
-    .btn-pink {
-      background-color: #ff007a;
-      border: 2px solid #1e293b;
-      transition: all 0.2s ease;
-    }
-    .btn-pink:hover {
-      background-color: #e0006c;
-      transform: translateY(-1px);
-    }
-    .btn-pink:active {
-      transform: translateY(1px);
-    }
+  <link href="https://cdn.jsdelivr.net/npm/daisyui@4.12.10/dist/full.min.css" rel="stylesheet" type="text/css" />
+  <script src="https://cdn.jsdelivr.net/npm/chart.js"></script>
+
+  <style>
+    body { font-family: 'Prompt', 'Plus Jakarta Sans', sans-serif; background-color: #ffffff !important; color: #0f172a; }
+    @keyframes sassyGradient { 0% { background-position: 0% 50%; } 50% { background-position: 100% 50%; } 100% { background-position: 0% 50%; } }
+    .sassy-title { background: linear-gradient(135deg, #ff007a 0%, #7b2cbf 35%, #00f0ff 70%, #ccff00 100%); background-size: 300% 300%; -webkit-background-clip: text; -webkit-text-fill-color: transparent; animation: sassyGradient 4s ease infinite; filter: drop-shadow(0 4px 12px rgba(255, 0, 122, 0.3)); }
+    .hub-card { background: #ffffff; border: 2px solid #0f172a; border-radius: 24px; box-shadow: 6px 6px 0px #0f172a; transition: all 0.25s ease; }
+    .hub-card-hover:hover { transform: translate(-4px, -4px); box-shadow: 10px 10px 0px #0f172a; }
+    .btn-action { background: linear-gradient(90deg, #ff007a, #9d4edd, #00f0ff); background-size: 200% 100%; color: #ffffff; border: 2px solid #0f172a; font-weight: 800; transition: all 0.3s ease; box-shadow: 4px 4px 0px #0f172a; }
+    .btn-action:hover { animation: sassyGradient 2s ease infinite; transform: translate(-2px, -2px); box-shadow: 6px 6px 0px #0f172a; color: #ffffff; }
+    .badge-pop { background: #ccff00; color: #000000; font-weight: 800; border: 1.5px solid #0f172a; }
+    .tab-active-pop { background: #0f172a !important; color: #ffffff !important; box-shadow: 4px 4px 0px #ff007a; }
+    .pop-input { background-color: #f8fafc; border: 2px solid #0f172a; border-radius: 14px; font-weight: 600; color: #0f172a; transition: all 0.2s ease; }
+    .pop-input:focus { background-color: #ffffff; border-color: #ff007a; box-shadow: 3px 3px 0px #0f172a; outline: none; }
   </style>
 </head>
 <body class="min-h-screen pb-12">
 
-  <div class="max-w-4xl mx-auto px-4 pt-6 space-y-6">
-
-    <!-- Header Banner สไตล์ Dark Modern -->
-    <div class="hero-banner rounded-3xl p-8 text-center text-white shadow-2xl relative overflow-hidden border border-slate-800">
-      <div class="inline-flex items-center gap-1.5 badge-pill px-3 py-1 rounded-full text-xs font-black uppercase tracking-wider mb-3">
-        💎 FINANCIAL & SALES MANAGEMENT HUB
+  <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 pt-6 space-y-8">
+    
+    <!-- Header Navigation -->
+    <div class="flex flex-col md:flex-row items-center justify-between gap-4 bg-slate-950 p-6 md:p-8 rounded-3xl border-2 border-slate-900 shadow-2xl relative overflow-hidden">
+      <div class="relative z-10 text-center md:text-left">
+        <div class="badge badge-pop text-[10px] tracking-widest uppercase mb-2 px-3 py-1 shadow-md">🛍️ MILIN GLOBAL GROUP</div>
+        <h1 class="text-3xl md:text-4xl font-black tracking-tight sassy-title uppercase py-0.5">SALES & ALLOCATION TRACKER</h1>
+        <p class="text-xs md:text-sm text-slate-300 mt-1 font-medium">บันทึกยอดขาย คำนวณยอดเงินเข้าบัญชีสุทธิ และจัดสรรกำไรเข้า 3 บัญชีอัตโนมัติ</p>
       </div>
-      <h1 class="text-4xl md:text-5xl font-black tracking-wide mb-2 neon-text">
-        THE NAIL LABS
-      </h1>
-      <p class="text-sm md:text-base text-slate-300 font-light max-w-lg mx-auto">
-        ระบบบันทึกรายการขาย บันทึกลง Sales & Ledger พร้อมสรุปผลการจัดสรรเงินอัตโนมัติจ้ะ!
-      </p>
-    </div>
 
-    <!-- Navigation Tab Simulation -->
-    <div class="flex justify-center">
-      <div class="bg-white border-2 border-slate-900 rounded-2xl p-1.5 flex gap-2 shadow-sm">
-        <button type="button" class="px-5 py-2 rounded-xl text-xs md:text-sm font-bold text-slate-700 hover:bg-slate-100 transition flex items-center gap-2">
-          📊 สรุปยอดเงิน & กราฟ
-        </button>
-        <button type="button" class="px-5 py-2 rounded-xl text-xs md:text-sm font-bold text-white bg-slate-900 shadow flex items-center gap-2">
-          📝 บันทึกข้อมูลการขายใหม่
-        </button>
+      <div class="relative z-10 flex flex-wrap justify-center gap-1 p-1.5 bg-white rounded-2xl border-2 border-slate-900 shadow-[4px_4px_0px_#0f172a]">
+        <button onclick="switchTab('form')" id="btn-tab-form" class="px-4 py-2.5 rounded-xl text-xs font-black transition-all duration-300 tab-active-pop">📝 กรอกการขาย</button>
+        <button onclick="switchTab('dashboard')" id="btn-tab-dash" class="px-4 py-2.5 rounded-xl text-xs font-black text-slate-700 hover:text-pink-600 transition-all duration-300">📊 Dashboard ยอดขาย</button>
+        <button onclick="switchTab('allocation')" id="btn-tab-alloc" class="px-4 py-2.5 rounded-xl text-xs font-black text-slate-700 hover:text-purple-600 transition-all duration-300">🏦 สรุปจัดสรร 3 บัญชี</button>
       </div>
     </div>
 
-    <!-- Form Card Container -->
-    <div class="max-w-xl mx-auto bg-white rounded-3xl p-6 md:p-8 custom-card space-y-6">
+    <!-- TAB 1: FORM INPUT -->
+    <div id="tab-form" class="grid grid-cols-1 lg:grid-cols-12 gap-8">
       
-      <!-- Card Title -->
-      <div class="flex items-start justify-between border-b border-slate-100 pb-4">
-        <div>
-          <h2 class="text-xl md:text-2xl font-bold text-slate-900 flex items-center gap-2">
-            🛒 ฟอร์มบันทึกข้อมูลการขาย
-          </h2>
-          <p class="text-xs text-slate-500 font-normal mt-1">
-            อัปโหลดสลิปเพื่อบันทึกข้อมูลเข้า Google Sheets (ข้าม Col F อัตโนมัติจ้ะ)
-          </p>
+      <!-- Upload Slip -->
+      <div class="lg:col-span-5 hub-card p-8 flex flex-col items-center justify-center text-center relative overflow-hidden group">
+        <div class="w-20 h-20 rounded-2xl bg-pink-100 text-pink-600 border-2 border-slate-900 flex items-center justify-center mb-4 shadow-[4px_4px_0px_#0f172a]">
+          <svg class="w-10 h-10" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M4 16l4.586-4.586a2 2 0 012.828 0L16 16m-2-2l1.586-1.586a2 2 0 012.828 0L20 14m-6-6h.01M6 20h12a2 2 0 002-2V6a2 2 0 00-2-2H6a2 2 0 00-2 2v12a2 2 0 002 2z"></path></svg>
         </div>
-        <div class="text-2xl">🛍️</div>
+        <span class="badge badge-pop text-[10px] mb-2">RECEIPT UPLOADER</span>
+        <h3 class="text-xl font-black text-slate-900 mb-2">แนบภาพสลิปโอนเงิน / ใบเสร็จ</h3>
+        <p class="text-xs text-slate-600 max-w-xs mb-6 font-medium">ภาพสลิปจะถูกบันทึกขึ้น Google Drive พร้อมแนบลิงก์ในบัญชีให้อัตโนมัติจ้ะ</p>
+
+        <input type="file" id="slipInput" accept="image/*" onchange="previewImage(this)" class="hidden">
+        <label for="slipInput" class="cursor-pointer btn btn-action px-6 py-3 text-xs tracking-wider uppercase">✨ เลือกไฟล์ภาพสลิป</label>
+        <div id="file-status" class="mt-4 w-full p-3 rounded-2xl text-xs font-bold hidden border-2 border-slate-900"></div>
       </div>
 
-      <!-- Form -->
-      <form id="uploadForm" class="space-y-5">
+      <!-- Form Body -->
+      <div class="lg:col-span-7 hub-card p-8 space-y-6">
+        <div class="flex items-center justify-between border-b-2 border-slate-900 pb-4">
+          <h3 class="text-xl font-black text-slate-900 flex items-center gap-2"><span>💅</span> รายละเอียดรายการขาย</h3>
+          <span class="text-xs text-slate-500 font-bold">* ระบบตัดสต็อกให้อัตโนมัติ</span>
+        </div>
         
-        <label class="block text-xs font-bold text-slate-800 mb-1">
-          📷 แนบรูปถ่ายสลิป / ใบสั่งซื้อ (SHOPEE, LAZADA, ฯลฯ)
-        </label>
-
-        <!-- Dropzone / Input Box -->
-        <div id="dropZone" class="custom-input-box rounded-xl p-4 text-center cursor-pointer bg-white hover:bg-slate-50 transition flex items-center justify-between gap-3">
-          <input type="file" id="slipInput" accept="image/*" class="hidden" required />
-          
-          <div id="uploadPrompt" class="flex items-center justify-between w-full">
-            <span class="bg-slate-800 text-white text-xs font-bold px-4 py-2 rounded-lg hover:bg-slate-700 transition">
-              เลือกไฟล์
-            </span>
-            <span id="fileLabel" class="text-xs text-slate-500 font-medium truncate flex-1 text-right">
-              ไม่ได้เลือกไฟล์ใด
-            </span>
+        <form id="txForm" onsubmit="submitForm(event)" class="grid grid-cols-1 md:grid-cols-2 gap-5">
+          <div>
+            <label class="block text-xs font-extrabold text-slate-800 mb-1.5 uppercase">วันที่ขาย</label>
+            <input type="date" id="date" required class="w-full pop-input p-3 text-sm">
           </div>
 
-          <div id="previewContainer" class="hidden w-full text-center space-y-2">
-            <img id="imagePreview" src="" class="max-h-60 rounded-lg mx-auto shadow border border-slate-200" />
-            <p class="text-xs text-slate-400">คลิกเพื่อเปลี่ยนรูปภาพ</p>
+          <div>
+            <label class="block text-xs font-extrabold text-slate-800 mb-1.5 uppercase">ช่องทางการขาย</label>
+            <select id="channel" required class="w-full pop-input p-3 text-sm font-bold text-purple-600">
+              <option value="Lazada">Lazada</option>
+              <option value="Shopee">Shopee</option>
+              <option value="TikTok Shop">TikTok Shop</option>
+              <option value="Line">Line / Direct</option>
+              <option value="Facebook">Facebook</option>
+              <option value="หน้าร้าน/รับเอง">หน้าร้าน / รับเอง</option>
+            </select>
           </div>
+
+          <div class="md:col-span-2">
+            <label class="block text-xs font-extrabold text-slate-800 mb-1.5 uppercase">เลือกรุ่นสินค้า (SKU)</label>
+            <input type="text" id="sku" placeholder="ระบุรหัส SKU เช่น 41534922744" required class="w-full pop-input p-3 text-sm font-bold text-pink-600">
+          </div>
+
+          <div>
+            <label class="block text-xs font-extrabold text-slate-800 mb-1.5 uppercase">จำนวนที่ขาย (ชุด)</label>
+            <input type="number" id="quantity" min="1" value="1" oninput="calculateFinancials()" required class="w-full pop-input p-3 text-sm">
+          </div>
+
+          <div>
+            <label class="block text-xs font-extrabold text-slate-800 mb-1.5 uppercase">ราคาขายเต็ม/ชุด (บาท)</label>
+            <input type="number" step="any" id="pricePerUnit" oninput="calculateFinancials()" placeholder="169.00" required class="w-full pop-input p-3 text-sm">
+          </div>
+
+          <div>
+            <label class="block text-xs font-extrabold text-emerald-700 mb-1.5 uppercase">ยอดขายรวมเต็ม (บาท)</label>
+            <input type="number" step="any" id="grossTotal" readonly placeholder="0.00" class="w-full pop-input p-3 text-base font-extrabold text-emerald-600 bg-emerald-50 border-emerald-600">
+          </div>
+
+          <div>
+            <label class="block text-xs font-extrabold text-rose-700 mb-1.5 uppercase">ค่าธรรมเนียม/ส่วนลดหัก (บาท)</label>
+            <input type="number" step="any" id="feeAmount" oninput="calculateFinancials()" placeholder="34.36" class="w-full pop-input p-3 text-sm font-bold text-rose-600 bg-rose-50 border-rose-600">
+          </div>
+
+          <!-- Highlight: Net Amount After Discount -->
+          <div class="md:col-span-2 p-4 bg-blue-50 border-2 border-blue-600 rounded-2xl">
+            <label class="block text-xs font-black text-blue-900 mb-1 uppercase">💰 ยอดเงินเข้าบัญชีสุทธิ (หลังหักค่าธรรมเนียม/ส่วนลด)</label>
+            <input type="number" step="any" id="netAmount" readonly placeholder="0.00" class="w-full bg-transparent border-none text-2xl font-black text-blue-700 p-0 focus:outline-none">
+          </div>
+
+          <div class="md:col-span-2">
+            <label class="block text-xs font-extrabold text-slate-800 mb-1.5 uppercase">หมายเหตุ / เลขที่ออเดอร์</label>
+            <input type="text" id="note" placeholder="เช่น เลขออเดอร์ #123456789" class="w-full pop-input p-3 text-sm">
+          </div>
+
+          <div class="md:col-span-2 pt-3">
+            <button type="submit" id="btn-submit" class="w-full btn btn-action py-4 text-sm font-black tracking-wider uppercase flex items-center justify-center gap-2">
+              <span>💾 บันทึกรายการขายลง Google Sheet</span>
+            </button>
+          </div>
+        </form>
+      </div>
+    </div>
+
+    <!-- TAB 2: DASHBOARD SUMMARY -->
+    <div id="tab-dashboard" class="space-y-8 hidden">
+      <div class="hub-card p-5 flex flex-col sm:flex-row items-center justify-between gap-4">
+        <div class="flex items-center gap-3">
+          <span class="badge badge-pop">DASHBOARD</span>
+          <h3 class="text-base font-black text-slate-900">สรุปยอดขายภาพรวม</h3>
+        </div>
+        <div class="flex items-center gap-3">
+          <label for="monthFilter" class="text-xs font-extrabold text-slate-700 uppercase">เลือกเดือน:</label>
+          <select id="monthFilter" onchange="fetchDashboardData()" class="pop-input px-4 py-2 text-xs font-bold">
+            <option value="ALL">🗓️ แสดงทั้งหมด</option>
+          </select>
+        </div>
+      </div>
+
+      <!-- Stat Cards -->
+      <div class="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-4 gap-6">
+        <div class="hub-card p-6 hub-card-hover">
+          <p class="text-xs font-extrabold text-slate-500 uppercase">ยอดขายรวมเต็ม (Gross)</p>
+          <h2 id="card-total-gross" class="text-2xl font-black text-slate-900 mt-1">฿0.00</h2>
+        </div>
+        <div class="hub-card p-6 hub-card-hover">
+          <p class="text-xs font-extrabold text-rose-500 uppercase">ค่าธรรมเนียม/ส่วนลดรวม</p>
+          <h2 id="card-total-fee" class="text-2xl font-black text-rose-600 mt-1">฿0.00</h2>
+        </div>
+        <div class="hub-card p-6 hub-card-hover bg-blue-50/50">
+          <p class="text-xs font-extrabold text-blue-700 uppercase">💎 ยอดเงินเข้าบัญชีสุทธิ</p>
+          <h2 id="card-total-net" class="text-2xl font-black text-blue-700 mt-1">฿0.00</h2>
+        </div>
+        <div class="hub-card p-6 hub-card-hover bg-emerald-50/50">
+          <p class="text-xs font-extrabold text-emerald-700 uppercase">💖 กำไรสุทธิรวม (Net Profit)</p>
+          <h2 id="card-total-profit" class="text-2xl font-black text-emerald-600 mt-1">฿0.00</h2>
+        </div>
+      </div>
+
+      <!-- Charts -->
+      <div class="grid grid-cols-1 lg:grid-cols-2 gap-8">
+        <div class="hub-card p-7 space-y-4">
+          <h3 class="text-base font-black text-slate-900">สัดส่วนยอดขายตามช่องทาง</h3>
+          <div class="relative min-h-[260px] flex items-center justify-center"><canvas id="doughnutChart"></canvas></div>
+        </div>
+        <div class="hub-card p-7 space-y-4">
+          <h3 class="text-base font-black text-slate-900">แนวโน้มกำไรสุบติตามเวลา</h3>
+          <div class="relative min-h-[260px] flex items-center justify-center"><canvas id="lineChart"></canvas></div>
+        </div>
+      </div>
+
+      <!-- Table -->
+      <div class="hub-card p-7 space-y-4 overflow-hidden">
+        <h3 class="text-base font-black text-slate-900">📜 ประวัติรายการขายล่าสุด (ยอดหลังหักส่วนลด)</h3>
+        <div class="overflow-x-auto">
+          <table class="w-full text-left text-sm text-slate-800">
+            <thead class="bg-slate-100 text-slate-900 border-2 border-slate-900 uppercase text-xs font-black">
+              <tr>
+                <th class="p-3">วันที่</th>
+                <th class="p-3">ช่องทาง</th>
+                <th class="p-3">SKU</th>
+                <th class="p-3 text-right">จำนวน</th>
+                <th class="p-3 text-right">ยอดรวมเต็ม</th>
+                <th class="p-3 text-right text-rose-600">ค่าธรรมเนียม</th>
+                <th class="p-3 text-right text-blue-700 bg-blue-50">เงินเข้าสุทธิ</th>
+                <th class="p-3 text-right text-emerald-600">กำไรสุทธิ</th>
+                <th class="p-3 text-center">สลิป</th>
+              </tr>
+            </thead>
+            <tbody id="txTableBody" class="divide-y-2 divide-slate-200 font-bold">
+              <tr><td colspan="9" class="text-center py-8 text-slate-400 font-bold">กำลังโหลดข้อมูล...</td></tr>
+            </tbody>
+          </table>
+        </div>
+      </div>
+    </div>
+
+    <!-- TAB 3: FINANCIAL ALLOCATION (3 ACCOUNTS) -->
+    <div id="tab-allocation" class="space-y-8 hidden">
+      <div class="hub-card p-5 flex items-center justify-between">
+        <div class="flex items-center gap-3">
+          <span class="badge badge-pop">MANAGEMENT</span>
+          <h3 class="text-base font-black text-slate-900">จัดสรรกำไรสุทธิเข้า 3 บัญชีบริหารธุรกิจ</h3>
+        </div>
+      </div>
+
+      <!-- 3 Accounts Allocation Cards -->
+      <div class="grid grid-cols-1 md:grid-cols-3 gap-6">
+        <div class="hub-card p-6 bg-amber-50/60 border-amber-900">
+          <div class="flex items-center justify-between mb-2">
+            <span class="px-2.5 py-1 rounded-lg text-[10px] font-black bg-amber-200 text-amber-900 border border-amber-900">ACCOUNT 1</span>
+            <span class="text-xs font-black text-amber-800">48.5%</span>
+          </div>
+          <p class="text-xs font-extrabold text-amber-900 uppercase">🔄 ทุนหมุนเวียน (Reinvest)</p>
+          <h2 id="card-alloc-reinvest" class="text-3xl font-black text-amber-700 mt-2">฿0.00</h2>
+          <p class="text-[11px] text-amber-800 mt-2 font-medium">สำหรับซื้อวัตถุดิบ/ของแถม/สั่งของเพิ่ม</p>
         </div>
 
-        <!-- Submit Button -->
-        <button type="submit" id="submitBtn" class="w-full btn-pink text-white font-bold py-3.5 px-6 rounded-xl shadow-md text-sm md:text-base flex items-center justify-center gap-2">
-          💾 บันทึกรายการลง SALES & LEDGER
-        </button>
-      </form>
+        <div class="hub-card p-6 bg-purple-50/60 border-purple-900">
+          <div class="flex items-center justify-between mb-2">
+            <span class="px-2.5 py-1 rounded-lg text-[10px] font-black bg-purple-200 text-purple-900 border border-purple-900">ACCOUNT 2</span>
+            <span class="text-xs font-black text-purple-800">30.5%</span>
+          </div>
+          <p class="text-xs font-extrabold text-purple-900 uppercase">👑 เงินเดือนตัวเอง (Salary)</p>
+          <h2 id="card-alloc-salary" class="text-3xl font-black text-purple-700 mt-2">฿0.00</h2>
+          <p class="text-[11px] text-purple-800 mt-2 font-medium">โอนเข้าบัญชีส่วนตัวเป็นรางวัลชีวิต</p>
+        </div>
 
-      <!-- Status Message -->
-      <div id="statusMessage" class="hidden p-4 rounded-xl text-center text-sm font-medium border-2"></div>
+        <div class="hub-card p-6 bg-cyan-50/60 border-cyan-900">
+          <div class="flex items-center justify-between mb-2">
+            <span class="px-2.5 py-1 rounded-lg text-[10px] font-black bg-cyan-200 text-cyan-900 border border-cyan-900">ACCOUNT 3</span>
+            <span class="text-xs font-black text-cyan-800">21.0%</span>
+          </div>
+          <p class="text-xs font-extrabold text-cyan-900 uppercase">🛡️ เงินสำรองร้าน (Reserve)</p>
+          <h2 id="card-alloc-reserve" class="text-3xl font-black text-cyan-700 mt-2">฿0.00</h2>
+          <p class="text-[11px] text-cyan-800 mt-2 font-medium">เก็บสำรองฉุกเฉิน / ยิงแอดขยายธุรกิจ</p>
+        </div>
+      </div>
+
+      <!-- Allocation Table -->
+      <div class="hub-card p-7 space-y-4 overflow-hidden">
+        <h3 class="text-base font-black text-slate-900">🏛️ ตารางแจกแจงเงินเข้า 3 บัญชีรายรายการ</h3>
+        <div class="overflow-x-auto">
+          <table class="w-full text-left text-sm text-slate-800">
+            <thead class="bg-slate-900 text-white uppercase text-xs font-black">
+              <tr>
+                <th class="p-3">วันที่</th>
+                <th class="p-3">SKU / ช่องทาง</th>
+                <th class="p-3 text-right">กำไรสุทธิรวม</th>
+                <th class="p-3 text-right text-amber-300 bg-slate-800">ทุนหมุนเวียน (48.5%)</th>
+                <th class="p-3 text-right text-purple-300 bg-slate-800">เงินเดือนตัวเอง (30.5%)</th>
+                <th class="p-3 text-right text-cyan-300 bg-slate-800">เงินสำรองร้าน (21%)</th>
+              </tr>
+            </thead>
+            <tbody id="allocTableBody" class="divide-y-2 divide-slate-200 font-bold">
+              <tr><td colspan="6" class="text-center py-8 text-slate-400 font-bold">กำลังโหลดข้อมูล...</td></tr>
+            </tbody>
+          </table>
+        </div>
+      </div>
     </div>
 
   </div>
 
- <script>
-    // ** ใส่ Web App URL ที่ได้จากการ Deploy Google Apps Script **
-    const WEB_APP_URL = "https://script.google.com/macros/s/AKfycbybZvtERcusr1Kp61veaoTa7rnXGI0OdvenTcHFukfvsRm0nEtFz_bDIi_-KcSvsAKkxw/exec";
+  <script>
+    // ⚠️ ใส่ Web App URL ของนัตตี้ตรงนี้จ้ะ
+    const GAS_WEB_APP_URL = "https://sales-worker.mastercineplex.workers.dev"; 
+    
+    let base64Image = null;
+    let doughnutChartInstance = null;
+    let lineChartInstance = null;
+    let cachedData = [];
 
-    const slipInput = document.getElementById('slipInput');
-    const dropZone = document.getElementById('dropZone');
-    const uploadPrompt = document.getElementById('uploadPrompt');
-    const previewContainer = document.getElementById('previewContainer');
-    const imagePreview = document.getElementById('imagePreview');
-    const uploadForm = document.getElementById('uploadForm');
-    const submitBtn = document.getElementById('submitBtn');
-    const statusMessage = document.getElementById('statusMessage');
-    const fileLabel = document.getElementById('fileLabel');
+    function calculateFinancials() {
+      const qty = parseFloat(document.getElementById('quantity').value) || 0;
+      const price = parseFloat(document.getElementById('pricePerUnit').value) || 0;
+      const fee = parseFloat(document.getElementById('feeAmount').value) || 0;
 
-    dropZone.addEventListener('click', () => slipInput.click());
+      const gross = qty * price;
+      const net = gross - fee;
 
-    slipInput.addEventListener('change', () => {
-      const file = slipInput.files[0];
-      if (file) {
-        fileLabel.innerText = file.name;
-        const reader = new FileReader();
-        reader.onload = (e) => {
-          imagePreview.src = e.target.result;
-          uploadPrompt.classList.add('hidden');
-          previewContainer.classList.remove('hidden');
-        };
-        reader.readAsDataURL(file);
-      }
-    });
-
-    // --- แก้ไขจุดนี้: เปลี่ยนจาก FormData เป็น Base64 ---
-    uploadForm.addEventListener('submit', (e) => {
-      e.preventDefault();
-      const file = slipInput.files[0];
-      if (!file) return;
-
-      submitBtn.disabled = true;
-      submitBtn.innerText = '⏳ กำลังอ่านข้อมูล OCR...';
-      showStatus('กำลังบันทึกรูปและสแกนสลิป โปรดรอสักครู่...', 'bg-blue-50 text-blue-700 border-blue-200');
-
-      const reader = new FileReader();
-      reader.onload = async function(e) {
-        // ดึงเฉพาะข้อมูล Base64 หลังจาก comma
-        const base64Data = e.target.result.split(',')[1];
-        
-        try {
-          const response = await fetch(WEB_APP_URL, {
-            method: 'POST',
-            body: JSON.stringify({
-              fileData: base64Data,
-              mimeType: file.type,
-              fileName: file.name
-            })
-          });
-
-          const result = await response.json();
-
-          if (result.success) {
-            showStatus(`✅ บันทึกสำเร็จ! ยอดเงิน: ${result.data.amount} บาท (เลขอ้างอิง: ${result.data.refNo})`, 'bg-green-50 text-green-700 border-green-200');
-          } else {
-            showStatus('❌ เกิดข้อผิดพลาด: ' + (result.message || 'ไม่สามารถอ่านข้อมูลได้'), 'bg-red-50 text-red-700 border-red-200');
-          }
-        } catch (error) {
-          showStatus('❌ ส่งข้อมูลไม่สำเร็จ หรือติดปัญหา CORS/Permission', 'bg-red-50 text-red-700 border-red-200');
-        } finally {
-          submitBtn.disabled = false;
-          submitBtn.innerText = '💾 บันทึกรายการลง SALES & LEDGER';
-        }
-      };
-      
-      reader.readAsDataURL(file);
-    });
-
-    function showStatus(msg, cssClass) {
-      statusMessage.innerText = msg;
-      statusMessage.className = `p-4 rounded-xl text-center text-sm font-medium border-2 ${cssClass}`;
-      statusMessage.classList.remove('hidden');
+      document.getElementById('grossTotal').value = gross.toFixed(2);
+      document.getElementById('netAmount').value = net.toFixed(2);
     }
+
+    function previewImage(input) {
+      const file = input.files[0];
+      if (!file) return;
+      const reader = new FileReader();
+      reader.onload = function(e) {
+        base64Image = e.target.result;
+        const status = document.getElementById('file-status');
+        status.classList.remove('hidden');
+        status.className = "mt-4 w-full p-3 rounded-2xl text-xs font-bold bg-emerald-200 text-slate-900 border-2 border-slate-900";
+        status.innerText = "📎 แนบรูปสลิปเรียบร้อยแล้วจ้ะ!";
+      };
+      reader.readAsDataURL(file);
+    }
+
+    function switchTab(tab) {
+      const btnForm = document.getElementById('btn-tab-form');
+      const btnDash = document.getElementById('btn-tab-dash');
+      const btnAlloc = document.getElementById('btn-tab-alloc');
+
+      const tabForm = document.getElementById('tab-form');
+      const tabDash = document.getElementById('tab-dashboard');
+      const tabAlloc = document.getElementById('tab-allocation');
+
+      [tabForm, tabDash, tabAlloc].forEach(t => t.classList.add('hidden'));
+      [btnForm, btnDash, btnAlloc].forEach(b => b.className = "px-4 py-2.5 rounded-xl text-xs font-black text-slate-700 hover:text-pink-600 transition-all duration-300");
+
+      if (tab === 'form') {
+        tabForm.classList.remove('hidden');
+        btnForm.className = "px-4 py-2.5 rounded-xl text-xs font-black transition-all duration-300 tab-active-pop";
+      } else if (tab === 'dashboard') {
+        tabDash.classList.remove('hidden');
+        btnDash.className = "px-4 py-2.5 rounded-xl text-xs font-black transition-all duration-300 tab-active-pop";
+        fetchDashboardData();
+      } else if (tab === 'allocation') {
+        tabAlloc.classList.remove('hidden');
+        btnAlloc.className = "px-4 py-2.5 rounded-xl text-xs font-black transition-all duration-300 tab-active-pop";
+        fetchDashboardData();
+      }
+    }
+
+    async function submitForm(e) {
+      e.preventDefault();
+      const btn = document.getElementById('btn-submit');
+      btn.disabled = true;
+      btn.innerHTML = "⏳ กำลังบันทึกข้อมูล...";
+
+      const payload = {
+        date: document.getElementById('date').value,
+        channel: document.getElementById('channel').value,
+        sku: document.getElementById('sku').value,
+        quantity: parseFloat(document.getElementById('quantity').value) || 0,
+        pricePerUnit: parseFloat(document.getElementById('pricePerUnit').value) || 0,
+        feeAmount: parseFloat(document.getElementById('feeAmount').value) || 0,
+        note: document.getElementById('note').value,
+        imageByte: base64Image,
+        fileName: base64Image ? `slip_${Date.now()}.png` : ""
+      };
+
+      try {
+        await fetch(GAS_WEB_APP_URL, {
+          method: 'POST',
+          headers: { 'Content-Type': 'text/plain;charset=utf-8' },
+          body: JSON.stringify(payload)
+        });
+
+        alert("🎉 บันทึกรายการขายและคำนวณแยก 3 บัญชีเรียบร้อยแล้วจ้า!");
+        document.getElementById('txForm').reset();
+        document.getElementById('file-status').classList.add('hidden');
+        base64Image = null;
+        document.getElementById('date').value = new Date().toISOString().split('T')[0];
+        calculateFinancials();
+      } catch (err) {
+        alert("❌ เกิดข้อผิดพลาดในการบันทึกข้อมูลจ้ะ");
+      } finally {
+        btn.disabled = false;
+        btn.innerHTML = "💾 บันทึกรายการขายลง Google Sheet";
+      }
+    }
+
+    async function fetchDashboardData() {
+      const selectedMonth = document.getElementById('monthFilter').value;
+      const url = selectedMonth && selectedMonth !== 'ALL' 
+        ? `${GAS_WEB_APP_URL}?month=${selectedMonth}` 
+        : GAS_WEB_APP_URL;
+
+      try {
+        const res = await fetch(url);
+        const json = await res.json();
+        
+        if (json.status === 'success' && json.data) {
+          cachedData = json.data;
+          if (document.getElementById('monthFilter').options.length === 1) {
+            populateMonthFilter(json.data);
+          }
+          renderDashboard(json.data);
+          renderTable(json.data);
+          renderAllocation(json.data);
+        }
+      } catch (err) {
+        console.error("Dashboard error:", err);
+      }
+    }
+
+    function populateMonthFilter(data) {
+      const monthSelect = document.getElementById('monthFilter');
+      const months = new Set();
+      data.forEach(item => { if (item.date) months.add(item.date.substring(0, 7)); });
+      Array.from(months).sort().reverse().forEach(m => {
+        const opt = document.createElement('option');
+        opt.value = m;
+        opt.innerText = `📅 เดือน ${m}`;
+        monthSelect.appendChild(opt);
+      });
+    }
+
+    function renderDashboard(data) {
+      let totalGross = 0, totalFee = 0, totalNet = 0, totalProfit = 0;
+      const channelMap = {};
+      const dateProfitMap = {};
+
+      data.forEach(item => {
+        totalGross += item.grossTotal;
+        totalFee += item.feeAmount;
+        totalNet += item.netAmount;
+        totalProfit += item.netProfit;
+
+        channelMap[item.channel] = (channelMap[item.channel] || 0) + item.grossTotal;
+        dateProfitMap[item.date] = (dateProfitMap[item.date] || 0) + item.netProfit;
+      });
+
+      document.getElementById('card-total-gross').innerText = `฿${totalGross.toLocaleString('th-TH', {minimumFractionDigits: 2})}`;
+      document.getElementById('card-total-fee').innerText = `฿${totalFee.toLocaleString('th-TH', {minimumFractionDigits: 2})}`;
+      document.getElementById('card-total-net').innerText = `฿${totalNet.toLocaleString('th-TH', {minimumFractionDigits: 2})}`;
+      document.getElementById('card-total-profit').innerText = `฿${totalProfit.toLocaleString('th-TH', {minimumFractionDigits: 2})}`;
+
+      // Doughnut
+      const ctx1 = document.getElementById('doughnutChart').getContext('2d');
+      if (doughnutChartInstance) doughnutChartInstance.destroy();
+      doughnutChartInstance = new Chart(ctx1, {
+        type: 'doughnut',
+        data: {
+          labels: Object.keys(channelMap),
+          datasets: [{ data: Object.values(channelMap), backgroundColor: ['#FF007A', '#7B2CBF', '#00F0FF', '#CCFF00', '#F59E0B'], borderWidth: 2, borderColor: '#0f172a' }]
+        },
+        options: { responsive: true, maintainAspectRatio: false }
+      });
+
+      // Line
+      const ctx2 = document.getElementById('lineChart').getContext('2d');
+      if (lineChartInstance) lineChartInstance.destroy();
+      const sortedDates = Object.keys(dateProfitMap).sort();
+      lineChartInstance = new Chart(ctx2, {
+        type: 'line',
+        data: {
+          labels: sortedDates,
+          datasets: [{ label: 'กำไรสุทธิ (บาท)', data: sortedDates.map(d => dateProfitMap[d]), borderColor: '#10B981', backgroundColor: 'rgba(16, 185, 129, 0.1)', fill: true, tension: 0.3 }]
+        },
+        options: { responsive: true, maintainAspectRatio: false }
+      });
+    }
+
+    function renderTable(data) {
+      const tbody = document.getElementById('txTableBody');
+      if (data.length === 0) {
+        tbody.innerHTML = `<tr><td colspan="9" class="text-center py-8 text-slate-400 font-bold">ไม่พบข้อมูลรายการจ้ะ</td></tr>`;
+        return;
+      }
+
+      tbody.innerHTML = [...data].reverse().map(item => `
+        <tr class="hover:bg-pink-50/50 transition-colors">
+          <td class="p-3 font-black">${item.date || '-'}</td>
+          <td class="p-3"><span class="px-2 py-0.5 rounded text-xs font-black bg-slate-900 text-white">${item.channel}</span></td>
+          <td class="p-3 font-bold text-xs">${item.sku}</td>
+          <td class="p-3 text-right">${item.quantity}</td>
+          <td class="p-3 text-right font-bold">฿${item.grossTotal.toFixed(2)}</td>
+          <td class="p-3 text-right text-rose-600 font-bold">฿${item.feeAmount.toFixed(2)}</td>
+          <td class="p-3 text-right text-blue-700 bg-blue-50/60 font-black">฿${item.netAmount.toFixed(2)}</td>
+          <td class="p-3 text-right text-emerald-600 font-black">฿${item.netProfit.toFixed(2)}</td>
+          <td class="p-3 text-center">${item.receiptUrl ? `<a href="${item.receiptUrl}" target="_blank" class="badge badge-pop px-2 py-1 text-[10px]">📎 สลิป</a>` : '-'}</td>
+        </tr>
+      `).join('');
+    }
+
+    function renderAllocation(data) {
+      let totalReinvest = 0, totalSalary = 0, totalReserve = 0;
+
+      data.forEach(item => {
+        totalReinvest += item.reinvestFund || 0;
+        totalSalary += item.salaryFund || 0;
+        totalReserve += item.reserveFund || 0;
+      });
+
+      document.getElementById('card-alloc-reinvest').innerText = `฿${totalReinvest.toLocaleString('th-TH', {minimumFractionDigits: 2})}`;
+      document.getElementById('card-alloc-salary').innerText = `฿${totalSalary.toLocaleString('th-TH', {minimumFractionDigits: 2})}`;
+      document.getElementById('card-alloc-reserve').innerText = `฿${totalReserve.toLocaleString('th-TH', {minimumFractionDigits: 2})}`;
+
+      const tbody = document.getElementById('allocTableBody');
+      if (data.length === 0) {
+        tbody.innerHTML = `<tr><td colspan="6" class="text-center py-8 text-slate-400 font-bold">ไม่พบข้อมูลการจัดสรรจ้ะ</td></tr>`;
+        return;
+      }
+
+      tbody.innerHTML = [...data].reverse().map(item => `
+        <tr class="hover:bg-purple-50/50 transition-colors">
+          <td class="p-3 font-black">${item.date || '-'}</td>
+          <td class="p-3 font-bold text-xs">${item.sku} <span class="text-slate-400">(${item.channel})</span></td>
+          <td class="p-3 text-right font-black text-emerald-600">฿${(item.netProfit || 0).toFixed(2)}</td>
+          <td class="p-3 text-right font-extrabold text-amber-700 bg-amber-50/30">฿${(item.reinvestFund || 0).toFixed(2)}</td>
+          <td class="p-3 text-right font-extrabold text-purple-700 bg-purple-50/30">฿${(item.salaryFund || 0).toFixed(2)}</td>
+          <td class="p-3 text-right font-extrabold text-cyan-700 bg-cyan-50/30">฿${(item.reserveFund || 0).toFixed(2)}</td>
+        </tr>
+      `).join('');
+    }
+
+    document.getElementById('date').value = new Date().toISOString().split('T')[0];
+    calculateFinancials();
   </script>
+
+  <!-- Footer -->
+  <footer class="mt-12 text-center text-xs font-bold text-slate-400 uppercase tracking-widest">
+    © 2026 VIRTUAL VOGUE BIZ — ALL RIGHTS RESERVED
+  </footer>
+
 </body>
 </html>
